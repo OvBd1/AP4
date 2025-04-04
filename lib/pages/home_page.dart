@@ -98,12 +98,6 @@ class _HomePageState extends State<HomePage> {
         
         _isLoading = false;
       });
-      
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Erreur lors du chargement des données')),
-        );
-      }
     }
   }
 
@@ -111,170 +105,154 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('GSB Stock', style: TextStyle(color: Colors.white)),
+        title: const Text('Tableau de bord', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color(0xFF4F4CD2),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh, color: Colors.white),
             onPressed: _loadDashboardData,
           ),
-          IconButton(
-            icon: const Icon(Icons.notifications, color: Colors.white),
-            onPressed: () {
-              // Navigate to notifications
-            },
-          ),
         ],
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Tableau de bord',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF4F4CD2),
-                      ),
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Aperçu du stock',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF4F4CD2),
                     ),
-                    const SizedBox(height: 20),
-                    
-                    // Summary cards
-                    GridView.count(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: [
-                        _buildSummaryCard(
-                          'Stock',
-                          _totalProducts.toString(),
-                          'produits',
-                          Icons.inventory,
-                          Colors.blue,
-                        ),
-                        _buildSummaryCard(
-                          'Alertes',
-                          _lowStockAlerts.toString(),
-                          'produits',
-                          Icons.warning,
-                          Colors.orange,
-                        ),
-                        _buildSummaryCard(
-                          'Commandes',
-                          _pendingOrders.toString(),
-                          'en cours',
-                          Icons.shopping_cart,
-                          Colors.green,
-                        ),
-                        _buildSummaryCard(
-                          'Péremption',
-                          _expiringProducts.toString(),
-                          'produits',
-                          Icons.event_busy,
-                          Colors.red,
-                        ),
-                      ],
-                    ),
-                    
-                    const SizedBox(height: 20),
-                    
-                    // Stock distribution chart
-                    if (_stockByCategory.isNotEmpty) ...[
-                      const Text(
-                        'Répartition des stocks',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF4F4CD2),
-                        ),
+                  ),
+                  const SizedBox(height: 20),
+                  
+                  // Summary cards
+                  GridView.count(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      _buildSummaryCard(
+                        'Stock',
+                        _totalProducts.toString(),
+                        'produits',
+                        Icons.inventory,
+                        Colors.blue,
                       ),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        height: 200,
-                        child: PieChart(
-                          PieChartData(
-                            sections: _buildPieChartSections(),
-                            centerSpaceRadius: 40,
-                            sectionsSpace: 2,
-                          ),
-                        ),
+                      _buildSummaryCard(
+                        'Alertes',
+                        _lowStockAlerts.toString(),
+                        'produits',
+                        Icons.warning,
+                        Colors.orange,
                       ),
-                      const SizedBox(height: 10),
-                      Wrap(
-                        spacing: 8.0,
-                        runSpacing: 8.0,
-                        children: _buildLegendItems(),
+                      _buildSummaryCard(
+                        'Commandes',
+                        _pendingOrders.toString(),
+                        'en cours',
+                        Icons.shopping_cart,
+                        Colors.green,
+                      ),
+                      _buildSummaryCard(
+                        'Péremption',
+                        _expiringProducts.toString(),
+                        'produits',
+                        Icons.access_time,
+                        Colors.red,
                       ),
                     ],
-                    
-                    const SizedBox(height: 20),
-                    
-                    // Quick action buttons
-                    const Text(
-                      'Actions rapides',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF4F4CD2),
+                  ),
+                  
+                  const SizedBox(height: 20),
+                  
+                  // Stock distribution chart
+                  const Text(
+                    'Répartition du stock',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF4F4CD2),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: 200,
+                    child: PieChart(
+                      PieChartData(
+                        sections: _getChartSections(),
+                        centerSpaceRadius: 40,
+                        sectionsSpace: 2,
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        _buildActionButton(
-                          Icons.qr_code_scanner,
-                          'Scanner',
-                          () {
-                            // Scanner action
-                          },
-                        ),
-                        _buildActionButton(
-                          Icons.check_circle,
-                          'Valider',
-                          () {
-                            // Validate action
-                          },
-                        ),
-                        _buildActionButton(
-                          Icons.add_circle,
-                          'Ajouter',
-                          () {
-                            // Add product action
-                          },
-                        ),
-                        _buildActionButton(
-                          Icons.bar_chart,
-                          'Rapport',
-                          () {
-                            // Generate report action
-                          },
-                        ),
-                      ],
+                  ),
+                  
+                  const SizedBox(height: 20),
+                  
+                  // Quick action buttons
+                  const Text(
+                    'Actions rapides',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF4F4CD2),
                     ),
-                    
-                    const SizedBox(height: 20),
-                    
-                    // Low stock alerts
-                    const Text(
-                      'Stocks critiques',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF4F4CD2),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _buildActionButton(
+                        Icons.qr_code_scanner,
+                        'Scanner',
+                        () {
+                          // Scanner action
+                        },
                       ),
+                      _buildActionButton(
+                        Icons.check_circle,
+                        'Valider',
+                        () {
+                          // Validate action
+                        },
+                      ),
+                      _buildActionButton(
+                        Icons.add_circle,
+                        'Ajouter',
+                        () {
+                          // Add product action
+                        },
+                      ),
+                      _buildActionButton(
+                        Icons.bar_chart,
+                        'Rapport',
+                        () {
+                          // Generate report action
+                        },
+                      ),
+                    ],
+                  ),
+                  
+                  const SizedBox(height: 20),
+                  
+                  // Low stock alerts
+                  const Text(
+                    'Stocks critiques',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF4F4CD2),
                     ),
-                    const SizedBox(height: 10),
-                    ..._lowStockItems.map((item) => _buildLowStockItem(item)),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 10),
+                  ..._lowStockItems.map((item) => _buildLowStockItem(item)),
+                ],
               ),
             ),
       bottomNavigationBar: BottomNavigationBar(
@@ -301,6 +279,20 @@ class _HomePageState extends State<HomePage> {
         ],
         onTap: (index) {
           // Handle navigation
+          switch (index) {
+            case 0:
+              // Already on home page
+              break;
+            case 1:
+              Navigator.pushReplacementNamed(context, '/produits');
+              break;
+            case 2:
+              Navigator.pushReplacementNamed(context, '/commandes');
+              break;
+            case 3:
+              Navigator.pushReplacementNamed(context, '/profile');
+              break;
+          }
         },
       ),
     );
@@ -345,76 +337,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  List<PieChartSectionData> _buildPieChartSections() {
-    final List<Color> colors = [
-      Colors.blue,
-      Colors.green,
-      Colors.orange,
-      Colors.purple,
-      Colors.red,
-      Colors.teal,
-      Colors.amber,
-    ];
-    
-    int i = 0;
-    return _stockByCategory.entries.map((entry) {
-      final color = colors[i % colors.length];
-      i++;
-      return PieChartSectionData(
-        color: color,
-        value: entry.value,
-        title: '',
-        radius: 50,
-        titleStyle: const TextStyle(
-          fontSize: 0,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-      );
-    }).toList();
-  }
-
-  List<Widget> _buildLegendItems() {
-    final List<Color> colors = [
-      Colors.blue,
-      Colors.green,
-      Colors.orange,
-      Colors.purple,
-      Colors.red,
-      Colors.teal,
-      Colors.amber,
-    ];
-    
-    int i = 0;
-    return _stockByCategory.entries.map((entry) {
-      final color = colors[i % colors.length];
-      i++;
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 16,
-              height: 16,
-              color: color,
-            ),
-            const SizedBox(width: 4),
-            Text(
-              '${entry.key} (${entry.value.toInt()}%)',
-              style: const TextStyle(fontSize: 12),
-            ),
-          ],
-        ),
-      );
-    }).toList();
-  }
-
-  Widget _buildActionButton(IconData icon, String label, VoidCallback onPressed) {
+  Widget _buildActionButton(IconData icon, String label, VoidCallback onTap) {
     return InkWell(
-      onTap: onPressed,
+      onTap: onTap,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             padding: const EdgeInsets.all(12),
@@ -422,9 +348,13 @@ class _HomePageState extends State<HomePage> {
               color: const Color(0xFF4F4CD2).withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(icon, color: const Color(0xFF4F4CD2), size: 28),
+            child: Icon(
+              icon,
+              color: const Color(0xFF4F4CD2),
+              size: 28,
+            ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 8),
           Text(
             label,
             style: TextStyle(
@@ -437,8 +367,42 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  List<PieChartSectionData> _getChartSections() {
+    final List<Color> colors = [
+      Colors.blue,
+      Colors.green,
+      Colors.orange,
+      Colors.purple,
+      Colors.teal,
+    ];
+    
+    final List<PieChartSectionData> sections = [];
+    int colorIndex = 0;
+    
+    _stockByCategory.forEach((category, value) {
+      sections.add(
+        PieChartSectionData(
+          color: colors[colorIndex % colors.length],
+          value: value,
+          title: '$category\n${value.toInt()}%',
+          radius: 50,
+          titleStyle: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      );
+      colorIndex++;
+    });
+    
+    return sections;
+  }
+
   Widget _buildLowStockItem(Map<String, dynamic> item) {
-    final double percentage = (item['quantity'] / item['threshold']) * 100;
+    final int quantity = item['quantity'] as int;
+    final int threshold = item['threshold'] as int;
+    final double percentage = (quantity / threshold) * 100;
     
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
@@ -446,11 +410,6 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(12.0),
         child: Row(
           children: [
-            Icon(
-              Icons.warning,
-              color: percentage < 20 ? Colors.red : Colors.orange,
-            ),
-            const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -459,9 +418,10 @@ class _HomePageState extends State<HomePage> {
                     item['name'],
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
+                      fontSize: 16,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 8),
                   LinearProgressIndicator(
                     value: percentage / 100,
                     backgroundColor: Colors.grey[200],
