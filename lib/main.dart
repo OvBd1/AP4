@@ -39,9 +39,9 @@ class _authRedirectorState extends State<authRedirector> {
     final email = prefs.getString('adresse_mail') ?? '';
 
     if (lname.isNotEmpty && fname.isNotEmpty && email.isNotEmpty) {
-      return '/menu';
+      return '/home';
     } else {
-      return '/menu';
+      return '/home';
     }
   }
 

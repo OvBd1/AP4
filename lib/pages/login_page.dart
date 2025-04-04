@@ -144,13 +144,13 @@ class _LoginPageState extends State<LoginPage> {
                     ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState?.validate() ?? false) {
-                          final String email = _emailController.text;
-                          final String password = _passwordController.text;
-                          debugPrint('Adresse mail: $email, Mot de passe: $password');
+                          final String mail = _emailController.text;
+                          final String mdp = _passwordController.text;
+                          debugPrint('Adresse mail: $mail, Mot de passe: $mdp');
 
                           final Map<String, String> body = {
-                            "email": email,
-                            "password": password,
+                            "mail": mail,
+                            "mdp": mdp,
                           };
 
                           try {
@@ -170,8 +170,8 @@ class _LoginPageState extends State<LoginPage> {
                                 Uri.parse('http://localhost:3000/user/'),
                                 headers: {"Content-Type": "application/json"},
                                 body: jsonEncode({
-                                  "mail": email,
-                                  "mdp": password
+                                  "mail": mail,
+                                  "mdp": mdp
                                 }),
                               );
 
