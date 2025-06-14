@@ -39,7 +39,7 @@ class _UserPageState extends State<UserPage> {
         return;
       }
       final response = await http.get(
-        Uri.parse('http://localhost:3000/users/me'),
+        Uri.parse('http://192.168.1.39:3000/users/me'),
         headers: {'Authorization': 'Bearer $token'},
       );
       if (response.statusCode == 200) {
@@ -186,10 +186,10 @@ class _UserPageState extends State<UserPage> {
                   child: Icon(Icons.person, size: 48),
                 ),
                 const SizedBox(height: 16),
-                Text('${profile['prenom'] ?? ''} ${profile['nom'] ?? ''}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                Text(profile['mail'] ?? '', style: const TextStyle(fontSize: 16)),
+                Text('${profile['prenom'] ?? ''} ${profile['nom'] ?? ''}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold), softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis),
+                Text(profile['mail'] ?? '', style: const TextStyle(fontSize: 16), softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis),
                 if (profile['num_tel'] != null)
-                  Text('Téléphone : ${profile['num_tel']}', style: const TextStyle(fontSize: 16)),
+                  Text('Téléphone : ${profile['num_tel']}', style: const TextStyle(fontSize: 16), softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis),
                 if (profile['date_naissance'] != null)
                   Text('Date de naissance : '
                     '${(() {
@@ -200,12 +200,14 @@ class _UserPageState extends State<UserPage> {
                         return '';
                       }
                     })()}',
-                    style: const TextStyle(fontSize: 16)),
+                    style: const TextStyle(fontSize: 16),
+                    softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
                     (profile['admin'] == 1) ? 'Rôle : Administrateur' : 'Rôle : Utilisateur',
                     style: const TextStyle(fontSize: 16),
+                    softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 const SizedBox(height: 24),

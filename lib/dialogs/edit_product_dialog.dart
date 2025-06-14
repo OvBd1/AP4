@@ -54,7 +54,7 @@ class _EditProductDialogState extends State<EditProductDialog> {
       'stock': int.tryParse(_stockController.text) ?? 0,
     };
     final response = await http.put(
-      Uri.parse('http://localhost:3000/products/${widget.product['id_produit']}'),
+      Uri.parse('http://192.168.1.39:3000/products/${widget.product['id_produit']}'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(updated),
     );

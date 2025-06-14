@@ -76,43 +76,63 @@ class _MainAppState extends State<MainApp> {
                 ),
               ),
               drawer: Drawer(
-                child: ListView(
-                  padding: EdgeInsets.zero,
+                child: Column(
                   children: [
-                    DrawerHeader(
-                      decoration: const BoxDecoration(color: Colors.blue),
-                      padding: EdgeInsets.zero,
-                      child: Image.asset(
-                        'lib/assets/gsbLogoSansNom.png',
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        height: double.infinity,
+                    Expanded(
+                      child: ListView(
+                        padding: EdgeInsets.zero,
+                        children: [
+                          DrawerHeader(
+                            decoration: const BoxDecoration(color: Colors.blue),
+                            padding: EdgeInsets.zero,
+                            child: Image.asset(
+                              'lib/assets/gsbLogoSansNom.png',
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                            ),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.home),
+                            title: const Text('Accueil'),
+                            selected: _selectedIndex == 0,
+                            onTap: () {
+                              _onItemTapped(0);
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.inventory),
+                            title: const Text('Produits'),
+                            selected: _selectedIndex == 1,
+                            onTap: () {
+                              _onItemTapped(1);
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.person),
+                            title: const Text('Utilisateurs'),
+                            selected: _selectedIndex == 2,
+                            onTap: () {
+                              _onItemTapped(2);
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
                       ),
                     ),
+                    const Divider(),
                     ListTile(
-                      leading: const Icon(Icons.home),
-                      title: const Text('Accueil'),
-                      selected: _selectedIndex == 0,
-                      onTap: () {
-                        _onItemTapped(0);
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.inventory),
-                      title: const Text('Produits'),
-                      selected: _selectedIndex == 1,
-                      onTap: () {
-                        _onItemTapped(1);
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.person),
-                      title: const Text('Utilisateurs'),
-                      selected: _selectedIndex == 2,
-                      onTap: () {
-                        _onItemTapped(2);
+                      leading: const Icon(Icons.logout, color: Colors.red),
+                      title: const Text('Déconnexion',
+                          style: TextStyle(color: Colors.red)),
+                      onTap: () async {
+                        await _storage.delete(key: 'auth_token');
+                        setState(() {
+                          _loggedIn = false;
+                          _selectedIndex = 0;
+                        });
                         Navigator.pop(context);
                       },
                     ),

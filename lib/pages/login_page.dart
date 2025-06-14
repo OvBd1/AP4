@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _login() async {
     setState(() { _loading = true; _error = null; });
     final response = await http.post(
-      Uri.parse('http://localhost:3000/auth'),
+      Uri.parse('http://192.168.1.39:3000/auth'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'mail': _usernameController.text,
@@ -53,14 +53,18 @@ class _LoginPageState extends State<LoginPage> {
               controller: _usernameController,
               decoration: const InputDecoration(labelText: 'Adresse e-mail'),
               keyboardType: TextInputType.emailAddress,
+              style: const TextStyle(overflow: TextOverflow.ellipsis),
+              maxLines: 1,
             ),
             TextField(
               controller: _passwordController,
               decoration: const InputDecoration(labelText: 'Mot de passe'),
               obscureText: true,
+              style: const TextStyle(overflow: TextOverflow.ellipsis),
+              maxLines: 1,
             ),
             const SizedBox(height: 20),
-            if (_error != null) Text(_error!, style: const TextStyle(color: Colors.red)),
+            if (_error != null) Text(_error!, style: const TextStyle(color: Colors.red), softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis),
             ElevatedButton(
               onPressed: _loading ? null : _login,
               child: _loading ? const CircularProgressIndicator() : const Text('Se connecter'),
