@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../dialogs/add_product_dialog.dart';
-import '../dialogs/edit_product_dialog.dart' as edit_dialog;
+import '../dialogs/edit_product_dialog.dart';
 import '../dialogs/edit_stock_dialog.dart';
 import '../dialogs/product_detail_dialog.dart';
 import '../dialogs/delete_product_dialog.dart';
@@ -79,7 +79,7 @@ class _ProductPageState extends State<ProductPage> {
                               if (value == 'edit') {
                                 final result = await showDialog(
                                   context: context,
-                                  builder: (context) => edit_dialog.EditProductDialog(product: product),
+                                  builder: (context) => EditProductDialog(product: product),
                                 );
                                 if (result == true) _fetchProducts();
                               } else if (value == 'stock') {
@@ -187,6 +187,7 @@ class _ProductPageState extends State<ProductPage> {
           bottom: 24,
           right: 24,
           child: FloatingActionButton(
+            backgroundColor: Colors.white,
             onPressed: () async {
               final result = await showDialog(
                 context: context,
@@ -197,7 +198,7 @@ class _ProductPageState extends State<ProductPage> {
               }
             },
             tooltip: 'Ajouter un produit',
-            child: const Icon(Icons.add),
+            child: const Icon(Icons.add, color: Colors.lightBlue),
           ),
         ),
       ],

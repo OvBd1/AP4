@@ -83,7 +83,7 @@ class _MainAppState extends State<MainApp> {
                         padding: EdgeInsets.zero,
                         children: [
                           DrawerHeader(
-                            decoration: const BoxDecoration(color: Colors.blue),
+                            decoration: const BoxDecoration(color: Colors.lightBlue),
                             padding: EdgeInsets.zero,
                             child: Image.asset(
                               'lib/assets/gsbLogoSansNom.png',
@@ -93,8 +93,8 @@ class _MainAppState extends State<MainApp> {
                             ),
                           ),
                           ListTile(
-                            leading: const Icon(Icons.home),
-                            title: const Text('Accueil'),
+                            leading: Icon(Icons.home, color: _selectedIndex == 0 ? Colors.lightBlue : null),
+                            title: Text('Accueil', style: TextStyle(color: _selectedIndex == 0 ? Colors.lightBlue : null)),
                             selected: _selectedIndex == 0,
                             onTap: () {
                               _onItemTapped(0);
@@ -102,8 +102,8 @@ class _MainAppState extends State<MainApp> {
                             },
                           ),
                           ListTile(
-                            leading: const Icon(Icons.inventory),
-                            title: const Text('Produits'),
+                            leading: Icon(Icons.inventory, color: _selectedIndex == 1 ? Colors.lightBlue : null),
+                            title: Text('Produits', style: TextStyle(color: _selectedIndex == 1 ? Colors.lightBlue : null)),
                             selected: _selectedIndex == 1,
                             onTap: () {
                               _onItemTapped(1);
@@ -111,8 +111,8 @@ class _MainAppState extends State<MainApp> {
                             },
                           ),
                           ListTile(
-                            leading: const Icon(Icons.person),
-                            title: const Text('Utilisateurs'),
+                            leading: Icon(Icons.person, color: _selectedIndex == 2 ? Colors.lightBlue : null),
+                            title: Text('Profil', style: TextStyle(color: _selectedIndex == 2 ? Colors.lightBlue : null)),
                             selected: _selectedIndex == 2,
                             onTap: () {
                               _onItemTapped(2);

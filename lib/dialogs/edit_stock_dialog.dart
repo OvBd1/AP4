@@ -51,11 +51,11 @@ class _EditStockDialogState extends State<EditStockDialog> {
       actions: [
         TextButton(
           onPressed: _loading ? null : () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: const Text('Annuler', style: TextStyle(color: Colors.lightBlue)),
         ),
         ElevatedButton(
           onPressed: _loading ? null : _submit,
-          child: _loading ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)) : const Text('Enregistrer'),
+          child: _loading ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)) : const Text('Enregistrer', style: TextStyle(color: Colors.lightBlue)),
         ),
       ],
     );

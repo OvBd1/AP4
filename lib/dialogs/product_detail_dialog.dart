@@ -47,7 +47,7 @@ class ProductDetailDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Fermer'),
+          child: const Text('Fermer', style: TextStyle(color: Colors.lightBlue)),
         ),
       ],
     );

@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
           Card(
             elevation: 2,
             child: ListTile(
-              leading: const Icon(Icons.inventory, color: Colors.blue),
+              leading: const Icon(Icons.inventory, color: Colors.lightBlue),
               title: const Text('Gérez vos produits', softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis),
               subtitle: const Text('Ajoutez, modifiez, supprimez et gérez le stock de vos produits.', softWrap: true, maxLines: 3, overflow: TextOverflow.ellipsis),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
@@ -51,8 +51,8 @@ class HomePage extends StatelessWidget {
           Card(
             elevation: 2,
             child: ListTile(
-              leading: const Icon(Icons.person, color: Colors.blue),
-              title: const Text('Gérez vos utilisateurs', softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis),
+              leading: const Icon(Icons.person, color: Colors.lightBlue),
+              title: const Text('Gérez votre compte', softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis),
               subtitle: const Text('Consultez et modifiez votre profil utilisateur.', softWrap: true, maxLines: 3, overflow: TextOverflow.ellipsis),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {

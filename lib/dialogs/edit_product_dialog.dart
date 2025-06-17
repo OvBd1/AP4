@@ -18,8 +18,6 @@ class _EditProductDialogState extends State<EditProductDialog> {
   late TextEditingController _dosageController;
   late TextEditingController _prixController;
   late TextEditingController _imageUrlController;
-  late TextEditingController _restrictionController;
-  late TextEditingController _conservationController;
   late TextEditingController _stockController;
   bool _loading = false;
   String? _error;
@@ -34,8 +32,6 @@ class _EditProductDialogState extends State<EditProductDialog> {
     _dosageController = TextEditingController(text: p['dosage'] ?? '');
     _prixController = TextEditingController(text: p['prix']?.toString() ?? '');
     _imageUrlController = TextEditingController(text: p['image_url'] ?? '');
-    _restrictionController = TextEditingController(text: p['restriction'] ?? '');
-    _conservationController = TextEditingController(text: p['conservation'] ?? '');
     _stockController = TextEditingController(text: p['stock']?.toString() ?? '');
   }
 
@@ -49,12 +45,10 @@ class _EditProductDialogState extends State<EditProductDialog> {
       'dosage': _dosageController.text,
       'prix': _prixController.text,
       'image_url': _imageUrlController.text,
-      'restriction': _restrictionController.text,
-      'conservation': _conservationController.text,
       'stock': int.tryParse(_stockController.text) ?? 0,
     };
     final response = await http.put(
-      Uri.parse('http://192.168.1.39:3000/products/${widget.product['id_produit']}'),
+      Uri.parse('http://localhost:3000/products/${widget.product['id_produit']}'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(updated),
     );
@@ -107,14 +101,6 @@ class _EditProductDialogState extends State<EditProductDialog> {
                 decoration: const InputDecoration(labelText: "URL de l'image"),
               ),
               TextFormField(
-                controller: _restrictionController,
-                decoration: const InputDecoration(labelText: 'Restriction'),
-              ),
-              TextFormField(
-                controller: _conservationController,
-                decoration: const InputDecoration(labelText: 'Conservation'),
-              ),
-              TextFormField(
                 controller: _stockController,
                 decoration: const InputDecoration(labelText: 'Stock*'),
                 keyboardType: TextInputType.number,
@@ -132,11 +118,11 @@ class _EditProductDialogState extends State<EditProductDialog> {
       actions: [
         TextButton(
           onPressed: _loading ? null : () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: const Text('Annuler', style: TextStyle(color: Colors.lightBlue)),
         ),
         ElevatedButton(
           onPressed: _loading ? null : _submit,
-          child: _loading ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)) : const Text('Enregistrer'),
+          child: _loading ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)) : const Text('Enregistrer', style: TextStyle(color: Colors.lightBlue)),
         ),
       ],
     );

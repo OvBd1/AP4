@@ -125,7 +125,8 @@ class _UserPageState extends State<UserPage> {
                 children: [
                   const CircleAvatar(
                     radius: 48,
-                    child: Icon(Icons.person, size: 48),
+                    backgroundColor: Colors.lightBlue,
+                    child: Icon(Icons.person, size: 48, color: Colors.white),
                   ),
                   const SizedBox(height: 16),
                   Padding(
@@ -162,11 +163,13 @@ class _UserPageState extends State<UserPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(
+                          style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlue),
                           onPressed: _saveEdit,
-                          child: const Text('Enregistrer'),
+                          child: const Text('Enregistrer', style: TextStyle(color: Colors.white)),
                         ),
                         const SizedBox(width: 16),
                         OutlinedButton(
+                          style: OutlinedButton.styleFrom(foregroundColor: Colors.lightBlue, side: const BorderSide(color: Colors.lightBlue)),
                           onPressed: () {
                             setState(() { _editMode = false; });
                           },
@@ -183,7 +186,8 @@ class _UserPageState extends State<UserPage> {
               children: [
                 const CircleAvatar(
                   radius: 48,
-                  child: Icon(Icons.person, size: 48),
+                  backgroundColor: Colors.lightBlue,
+                  child: Icon(Icons.person, size: 48, color: Colors.white),
                 ),
                 const SizedBox(height: 16),
                 Text('${profile['prenom'] ?? ''} ${profile['nom'] ?? ''}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold), softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis),
@@ -212,8 +216,9 @@ class _UserPageState extends State<UserPage> {
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlue),
                   onPressed: () => _startEdit(profile),
-                  child: const Text('Modifier le profil'),
+                  child: const Text('Modifier le profil', style: TextStyle(color: Colors.white)),
                 ),
               ],
             ),

@@ -45,12 +45,12 @@ class _DeleteProductDialogState extends State<DeleteProductDialog> {
       actions: [
         TextButton(
           onPressed: _loading ? null : () => Navigator.of(context).pop(false),
-          child: const Text('Annuler'),
+          child: const Text('Annuler', style: TextStyle(color: Colors.lightBlue)),
         ),
         ElevatedButton(
           onPressed: _loading ? null : _deleteProduct,
           style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-          child: _loading ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)) : const Text('Supprimer'),
+          child: _loading ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)) : const Text('Supprimer', style: TextStyle(color: Colors.white)),
         ),
       ],
     );

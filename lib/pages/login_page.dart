@@ -49,6 +49,11 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Image.asset(
+              'lib/assets/gsbLogoAvecNom.png',
+              height: 80,
+            ),
+            const SizedBox(height: 24),
             TextField(
               controller: _usernameController,
               decoration: const InputDecoration(labelText: 'Adresse e-mail'),
@@ -66,8 +71,9 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 20),
             if (_error != null) Text(_error!, style: const TextStyle(color: Colors.red), softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlue),
               onPressed: _loading ? null : _login,
-              child: _loading ? const CircularProgressIndicator() : const Text('Se connecter'),
+              child: _loading ? const CircularProgressIndicator() : const Text('Se connecter', style: TextStyle(color: Colors.white)),
             ),
           ],
         ),
