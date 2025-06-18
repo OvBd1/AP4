@@ -38,7 +38,7 @@ class _AddProductDialogState extends State<AddProductDialog> {
       'stock': int.tryParse(_stockController.text) ?? 0,
     };
     final response = await http.post(
-      Uri.parse('http://192.168.1.39:3000/products'),
+      Uri.parse('http://localhost:3000/products'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(data),
     );

@@ -39,7 +39,7 @@ class _UserPageState extends State<UserPage> {
         return;
       }
       final response = await http.get(
-        Uri.parse('http://192.168.1.39:3000/users/me'),
+        Uri.parse('http://localhost:3000/users/me'),
         headers: {'Authorization': 'Bearer $token'},
       );
       if (response.statusCode == 200) {

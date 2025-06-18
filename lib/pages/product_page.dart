@@ -28,7 +28,7 @@ class _ProductPageState extends State<ProductPage> {
   Future<void> _fetchProducts() async {
     setState(() { _loading = true; _error = null; });
     try {
-      final response = await http.get(Uri.parse('http://192.168.1.39:3000/products'));
+      final response = await http.get(Uri.parse('http://localhost:3000/products'));
       if (response.statusCode == 200) {
         setState(() {
           _products = jsonDecode(response.body);

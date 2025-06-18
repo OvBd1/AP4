@@ -16,7 +16,7 @@ class _DeleteProductDialogState extends State<DeleteProductDialog> {
   Future<void> _deleteProduct() async {
     setState(() { _loading = true; _error = null; });
     final response = await http.delete(
-      Uri.parse('http://192.168.1.39:3000/products/${widget.product['id_produit']}'),
+      Uri.parse('http://localhost:3000/products/${widget.product['id_produit']}'),
       headers: {'Content-Type': 'application/json'},
     );
     setState(() { _loading = false; });
